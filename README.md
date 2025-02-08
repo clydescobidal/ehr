@@ -14,3 +14,9 @@ to this in your browser, and you can call your Go code from devtools.
 ## Building
 
 To build a redistributable, production mode package, use `wails build`.
+
+
+## wails command not found? Run:
+```bash
+sudo cp ~/go/bin/wails /usr/local/go/bin/
+```
