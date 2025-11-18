@@ -12,10 +12,14 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     public function login(LoginRequest $request) {
-        $user = User::where('email', $request->input('email'))->firstOrFail();
+        $user = User::where('email', $request->input('email'))->first();
+
+        if (! $user) {
+            abort(422, "INVALID_CREDENTIALS");
+        }
         
         if (! Hash::check($request->input('password'), $user->password)) {
-            abort(422, "INVALID_PASSWORD");
+            abort(422, "INVALID_CREDENTIALS");
         }
 
         $tokenName = sprintf("%s %s", $request->header('User-Agent'), $request->ip());
