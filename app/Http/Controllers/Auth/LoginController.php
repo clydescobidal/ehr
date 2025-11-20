@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Resources\TokenResource;
 use App\Models\User;
 use Hash;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {

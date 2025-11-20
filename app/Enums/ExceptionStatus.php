@@ -2,22 +2,23 @@
 
 namespace App\Enums;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedByRequestDataException;
+use Symfony\Component\HttpFoundation\Response;
 
 enum ExceptionStatus: int
 {
-    case ValidationException = 422;
-    case ModelNotFoundException = 404;
-    case HttpException = 500;
-
     public static function fromException(\Throwable $e): int
     {
         return match (true) {
-            $e instanceof ValidationException => self::ValidationException->value,
-            $e instanceof ModelNotFoundException => self::ModelNotFoundException->value,
+            $e instanceof ValidationException => Response::HTTP_UNPROCESSABLE_ENTITY,
+            $e instanceof ModelNotFoundException => Response::HTTP_NOT_FOUND,
+            $e instanceof AuthenticationException => Response::HTTP_UNAUTHORIZED,
+            $e instanceof TenantCouldNotBeIdentifiedByRequestDataException => Response::HTTP_NOT_FOUND,
             method_exists($e, 'getStatusCode') => $e->getStatusCode(),
-            default => self::HttpException->value,
+            default => Response::HTTP_INTERNAL_SERVER_ERROR,
         };
     }
 }
