@@ -10,4 +10,6 @@ class PersonalAccessToken extends BasePersonalAccessToken
     use HasUlids;
 
     protected string $ULID_PREFIX = 'pat_';
+
+    protected $connection = 'pgsql';
 }

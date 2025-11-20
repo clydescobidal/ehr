@@ -19,6 +19,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         'tenancy_db_name'
     ];
 
+    protected $hidden = ['pivot', 'tenancy_db_name'];
+
     public static function getCustomColumns(): array
     {
         return [

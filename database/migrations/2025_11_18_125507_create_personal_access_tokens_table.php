@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->ulid('id', length: 32)->primary();
+            $table->ulid('id', length: 30)->primary();
             $tokenableName = 'tokenable';
             $table
                 ->string("{$tokenableName}_type")
                 ->after($tokenableName);
             $table
-                ->ulid("{$tokenableName}_id", 32)
+                ->ulid("{$tokenableName}_id", 30)
                 ->after("{$tokenableName}_type");
 
             $table->index(["{$tokenableName}_type", "{$tokenableName}_id"]);

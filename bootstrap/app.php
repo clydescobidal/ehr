@@ -1,11 +1,13 @@
 <?php
 
 use App\Enums\ExceptionStatus;
+use App\Http\Middleware\HasTenantRoles;
 use App\Http\Middleware\JSONResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Stancl\Tenancy\Middleware\InitializeTenancyByRequestData;
+use Stancl\Tenancy\Middleware\ScopeSessions;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,7 +25,12 @@ return Application::configure(basePath: dirname(__DIR__))
                     ]);
             }
     
-            Route::middleware(['api', InitializeTenancyByRequestData::class])
+            Route::middleware([
+                    'api', 
+                    'auth:sanctum', 
+                    InitializeTenancyByRequestData::class, 
+                    HasTenantRoles::class
+                ])
                 ->prefix('api/v1/tenants')
                 ->group(base_path('routes/tenant/api.php'));
         }

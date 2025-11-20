@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTenantRequest;
 use App\Models\Tenant;
+use App\Models\TenantUser;
+use Auth;
 use Illuminate\Http\Request;
 use Stancl\Tenancy\Database\Models\Domain;
 use Str;
@@ -11,6 +13,7 @@ use Str;
 class TenantController extends Controller
 {
     public function create(CreateTenantRequest $request) {
+        $user = Auth::user();
         $name = $request->input('name');
         $dbName = $this->generateDatabaseName($name);
 
@@ -18,6 +21,13 @@ class TenantController extends Controller
             'name' => $name,
             'tenancy_db_name' => $dbName
         ]);
+
+        $tenantUser = TenantUser::create([
+            'user_id' => $user->id,
+            'tenant_id' => $tenant->id
+        ]);
+
+        $tenantUser->assignRole('owner');
 
         return $tenant;
     }
