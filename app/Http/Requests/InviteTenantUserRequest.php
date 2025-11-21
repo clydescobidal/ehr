@@ -14,7 +14,7 @@ class InviteTenantUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check() && Auth::user()->can('invite-user', $this->route('tenant'));
+        return Auth::check();
     }
 
     /**
@@ -25,6 +25,7 @@ class InviteTenantUserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'tenant_id' => ['required', 'string', 'exists:tenants,id'],
             'email' => ['required', 'string', 'email'],
             'role_id' => ['required', 'string']
         ];
