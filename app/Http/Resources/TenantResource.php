@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 
-class TokenResource extends BaseJsonResource
+class TenantResource extends BaseJsonResource
 {
     /**
      * Transform the resource into an array.

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->ulid('tenant_id', length: 30);
             $table->ulid('role_id', length: 30);
             $table->string('email');
-            $table->string('token');
             $table->timestamps();
 
             $table->unique(['tenant_id', 'role_id', 'email']);

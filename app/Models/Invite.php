@@ -19,7 +19,6 @@ class Invite extends Model
         'tenant_id',
         'role_id',
         'email',
-        'token'
     ];
 
     public function tenant() {

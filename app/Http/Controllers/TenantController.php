@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTenantRequest;
+use App\Http\Resources\TenantResource;
 use App\Models\Tenant;
 use App\Models\TenantUser;
 use Auth;
@@ -27,7 +28,7 @@ class TenantController extends Controller
 
         $tenantUser->assignRole('owner');
 
-        return $tenant;
+        return TenantResource::make($tenant);
     }
 
     protected function generateDatabaseName(string $name) {

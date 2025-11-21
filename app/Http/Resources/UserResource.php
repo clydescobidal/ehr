@@ -4,10 +4,8 @@ namespace App\Http\Resources;
 
 use Arr;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Symfony\Component\HttpFoundation\Response;
 
-class UserResource extends JsonResource
+class UserResource extends BaseJsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,14 +23,8 @@ class UserResource extends JsonResource
                 'roles' => Arr::pluck($tenant['roles'], 'name')
             ];
         }
-     
-        return [
-            'status' => [
-                'error' => false,
-                'message' => $this->resource->message ?? null,
-                'code' => Response::HTTP_OK,
-            ],
-            'data' => $data,
-        ];
+
+
+        return parent::format($data);
     }
 }

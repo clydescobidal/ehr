@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     // Invites
     Route::group(['prefix' => 'invites', 'middleware' => ['auth:sanctum']], function() {
-        Route::post('/', [InviteController::class, 'create'])->scopeBindings();
+        Route::post('/', [InviteController::class, 'create']);
+        Route::get('/', [InviteController::class, 'list']);
     });
 });
