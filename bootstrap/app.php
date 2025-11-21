@@ -7,7 +7,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Stancl\Tenancy\Middleware\InitializeTenancyByRequestData;
-use Stancl\Tenancy\Middleware\ScopeSessions;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -56,4 +55,5 @@ return Application::configure(basePath: dirname(__DIR__))
     
             return response()->json($data, $status);
         });
-    })->create();
+    })
+    ->create();

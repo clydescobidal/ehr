@@ -24,6 +24,6 @@ class LoginController extends Controller
         $tokenName = sprintf("%s %s", $request->header('User-Agent'), $request->ip());
         $token = $user->createToken($tokenName);
 
-        return TokenResource::make(['token' => $token->plainTextToken]);
+        return TokenResource::make($token->plainTextToken);
     }
 }

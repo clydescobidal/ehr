@@ -13,6 +13,11 @@ class TokenResource extends BaseJsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::format(parent::toArray($request));
+        $data = [
+            'token_type' => 'Bearer',
+            'access_token' => $this->resource
+        ];
+
+        return parent::format($data);
     }
 }

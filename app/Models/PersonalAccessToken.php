@@ -16,4 +16,10 @@ class PersonalAccessToken extends BasePersonalAccessToken
     protected string $ULID_PREFIX = 'pat_';
 
     protected $connection = 'pgsql';
+
+    public function setLastUsedAtAttribute($value)
+    {
+        // Block updating this column completely
+        // Do not set it at all
+    }
 }
