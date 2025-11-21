@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenant_users', function (Blueprint $table) {
+        Schema::create('patients', function (Blueprint $table) {
             $table->ulid('id', length: 30)->primary();
-            $table->ulid('tenant_id', length: 30);
-            $table->ulid('user_id', length: 30);
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->date('birth_date');
+            $table->string('birth_place');
+            $table->string('occupation');
+            $table->string('religion');
+            $table->string('contact_number');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['tenant_id', 'user_id']);
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenant_users');
+        Schema::dropIfExists('patients');
     }
 };

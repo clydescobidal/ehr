@@ -9,6 +9,10 @@ class PersonalAccessToken extends BasePersonalAccessToken
 {
     use HasUlids;
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;  
+
     protected string $ULID_PREFIX = 'pat_';
 
     protected $connection = 'pgsql';

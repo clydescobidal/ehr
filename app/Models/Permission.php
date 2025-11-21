@@ -9,5 +9,9 @@ class Permission extends BasePermission
 {
     use HasUlids;
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;  
+
     protected string $ULID_PREFIX = 'per_';
 }

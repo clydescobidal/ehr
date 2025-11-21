@@ -15,6 +15,10 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, HasUlids, Notifiable;
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;  
+
     protected string $ULID_PREFIX = 'usr_';
 
     /**
@@ -64,5 +68,16 @@ class User extends Authenticatable
         }
 
         return $tenantRoles;
+    }
+
+    public function getRolesOnTenant(Tenant $tenant) {
+        $roles = [];
+
+        $tenant = $this->tenants->firstWhere('tenant_id', $tenant->id);
+        if ($tenant) {
+            $roles = $tenant->roles->pluck('name')->toArray();
+        }
+        
+        return $roles;
     }
 }

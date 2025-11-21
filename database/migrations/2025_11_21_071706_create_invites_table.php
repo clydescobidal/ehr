@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenant_users', function (Blueprint $table) {
+        Schema::create('invites', function (Blueprint $table) {
             $table->ulid('id', length: 30)->primary();
             $table->ulid('tenant_id', length: 30);
-            $table->ulid('user_id', length: 30);
+            $table->ulid('role_id', length: 30);
+            $table->string('email');
+            $table->string('token');
             $table->timestamps();
-            $table->softDeletes();
 
-            $table->unique(['tenant_id', 'user_id']);
+            $table->unique(['tenant_id', 'role_id', 'email']);
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenant_users');
+        Schema::dropIfExists('invites');
     }
 };

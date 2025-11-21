@@ -28,6 +28,6 @@ trait HasUlids
      */
     protected function isValidUniqueId($value): bool
     {
-        return Str::isUlid($value);
+        return Str::isUlid(Str::replace($this->ULID_PREFIX, '', $value));
     }
 }

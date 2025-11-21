@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Console\Commands\TenantsDatabaseSeeder;
 use App\Models\Tenant;
+use App\Tenancy\SpatiePermissionsBootstrapper;
 use Stancl\Tenancy\Database\Models\Domain;
 
 return [
@@ -32,6 +34,7 @@ return [
         Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
+        SpatiePermissionsBootstrapper::class,
         // Stancl\Tenancy\Bootstrappers\RedisTenancyBootstrapper::class, // Note: phpredis is needed
     ],
 
@@ -193,7 +196,7 @@ return [
      * Parameters used by the tenants:seed command.
      */
     'seeder_parameters' => [
-        '--class' => 'DatabaseSeeder', // root seeder class
-        // '--force' => true, // This needs to be true to seed tenant databases in production
+        '--class' => \Database\Seeders\TenantsDatabaseSeeder::class, // root seeder class
+        '--force' => true, // This needs to be true to seed tenant databases in production
     ],
 ];

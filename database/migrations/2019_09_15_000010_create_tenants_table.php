@@ -18,8 +18,9 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->ulid('id', length: 30)->primary();
             $table->string('name');
-            $table->timestamps();
             $table->json('data')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

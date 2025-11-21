@@ -20,15 +20,15 @@ return new class extends Migration
         throw_if(empty($tableNames), Exception::class, 'Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         throw_if($teams && empty($columnNames['team_foreign_key'] ?? null), Exception::class, 'Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
 
-        Schema::create($tableNames['permissions'], static function (Blueprint $table) {
-            // $table->engine('InnoDB');
-            $table->ulid('id', 30)->unique(); // permission id
-            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
-            $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
-            $table->timestamps();
+        // Schema::create($tableNames['permissions'], static function (Blueprint $table) {
+        //     // $table->engine('InnoDB');
+        //     $table->ulid('id', 30)->unique(); // permission id
+        //     $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
+        //     $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+        //     $table->timestamps();
 
-            $table->unique(['name', 'guard_name']);
-        });
+        //     $table->unique(['name', 'guard_name']);
+        // });
 
         Schema::create($tableNames['roles'], static function (Blueprint $table) use ($teams, $columnNames) {
             // $table->engine('InnoDB');
@@ -47,29 +47,29 @@ return new class extends Migration
             }
         });
 
-        Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
-            $table->ulid($pivotPermission, 30)->unique();
+        // Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
+        //     $table->ulid($pivotPermission, 30)->unique();
 
-            $table->string('model_type');
-            $table->ulid($columnNames['model_morph_key'], 30);
-            $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
+        //     $table->string('model_type');
+        //     $table->ulid($columnNames['model_morph_key'], 30);
+        //     $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
 
-            $table->foreign($pivotPermission)
-                ->references('id') // permission id
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
-            if ($teams) {
-                $table->ulid($columnNames['team_foreign_key'], 30);
-                $table->index($columnNames['team_foreign_key'], 'model_has_permissions_team_foreign_key_index');
+        //     $table->foreign($pivotPermission)
+        //         ->references('id') // permission id
+        //         ->on($tableNames['permissions'])
+        //         ->onDelete('cascade');
+        //     if ($teams) {
+        //         $table->ulid($columnNames['team_foreign_key'], 30);
+        //         $table->index($columnNames['team_foreign_key'], 'model_has_permissions_team_foreign_key_index');
 
-                $table->primary([$columnNames['team_foreign_key'], $pivotPermission, $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_permissions_permission_model_type_primary');
-            } else {
-                $table->primary([$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_permissions_permission_model_type_primary');
-            }
+        //         $table->primary([$columnNames['team_foreign_key'], $pivotPermission, $columnNames['model_morph_key'], 'model_type'],
+        //             'model_has_permissions_permission_model_type_primary');
+        //     } else {
+        //         $table->primary([$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
+        //             'model_has_permissions_permission_model_type_primary');
+        //     }
 
-        });
+        // });
 
         Schema::create($tableNames['model_has_roles'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
             $table->ulid($pivotRole, 30);
@@ -94,22 +94,22 @@ return new class extends Migration
             }
         });
 
-        Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
-            $table->ulid($pivotPermission, 30);
-            $table->ulid($pivotRole, 30);
+        // Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
+        //     $table->ulid($pivotPermission, 30);
+        //     $table->ulid($pivotRole, 30);
 
-            $table->foreign($pivotPermission)
-                ->references('id') // permission id
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
+        //     $table->foreign($pivotPermission)
+        //         ->references('id') // permission id
+        //         ->on($tableNames['permissions'])
+        //         ->onDelete('cascade');
 
-            $table->foreign($pivotRole)
-                ->references('id') // role id
-                ->on($tableNames['roles'])
-                ->onDelete('cascade');
+        //     $table->foreign($pivotRole)
+        //         ->references('id') // role id
+        //         ->on($tableNames['roles'])
+        //         ->onDelete('cascade');
 
-            $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
-        });
+        //     $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
+        // });
 
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)

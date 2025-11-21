@@ -12,6 +12,7 @@ class UserController extends Controller
             $query->whereHas('roles')->with('tenant', 'roles');
         }]);
 
+
         return UserResource::make($user);
     }
 }

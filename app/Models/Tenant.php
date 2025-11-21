@@ -14,6 +14,10 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     protected string $ULID_PREFIX = 'ten_';
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;  
+
     protected $fillable = [
         'name',
         'tenancy_db_name'
@@ -29,5 +33,9 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'created_at',
             'updated_at'
         ];
+    }
+
+    public function tenantUsers() {
+        return $this->hasMany(TenantUser::class);
     }
 };
