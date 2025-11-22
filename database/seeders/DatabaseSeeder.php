@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,7 +21,36 @@ class DatabaseSeeder extends Seeder
             return;
         }
 
-        Role::firstOrCreate(['name' => 'owner', 'guard_name' => 'sanctum']);
-        Role::firstOrCreate(['name' => 'administrator', 'guard_name' => 'sanctum']);
+        $departments = [
+            'admin' => [
+                'owner',
+                'administrator'
+            ],
+            'clinical' => [
+                'doctor',
+                'nurse'
+            ],
+            'billing' => [
+                'cashier',
+                'hmo'
+            ],
+            'pharmacy' => [
+                'pharmacist'
+            ],
+            'radiology' => [
+                'radio_technologist'
+            ],
+            'laboratory' => [
+                'medical_technologist'
+            ]
+        ];
+
+        foreach($departments as $department => $roles) {
+            $department = Department::firstOrCreate(['name' => $department]);
+            
+            foreach($roles as $role) {
+                Role::firstOrCreate(['guard_name' => 'sanctum', 'department_id' => $department->id, 'name' => $role]);
+            }
+        }
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Tenant;
 use Auth;
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class InviteTenantUserRequest extends FormRequest
+class CreateAdmissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +23,7 @@ class InviteTenantUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['required', 'string', 'exists:tenants,id'],
-            'role_id' => ['required', 'string', 'exist:roles,id'],
-            'email' => ['required', 'string', 'email']
+            'patient_id' => ['required', 'string',  'exists:patients,id']
         ];
     }
 }

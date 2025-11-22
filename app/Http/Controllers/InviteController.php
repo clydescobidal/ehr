@@ -24,7 +24,7 @@ class InviteController extends Controller
     public function create(InviteTenantUserRequest $request) {
         $tenant = Tenant::findOrFail($request->input('tenant_id'));
 
-        if (Auth::user()->cant('inviteUser', $tenant)) {
+        if (Auth::user()->cannot('inviteUser', $tenant)) {
             abort(Response::HTTP_FORBIDDEN, 'FORBIDDEN');
         }
 
@@ -38,16 +38,9 @@ class InviteController extends Controller
             abort(Response::HTTP_CONFLICT, 'TENANT_USER_ALREADY_EXISTS');
         }
 
-        tenancy()->initialize($tenant);
-        $tenantRole = Role::find($request->input('role_id'));
-        if (! $tenantRole) {
-            abort(Response::HTTP_UNPROCESSABLE_ENTITY, 'INVALID_TENANT_ROLE');
-        }
-        tenancy()->end();
-
         $invite = Invite::firstOrCreate([
             'tenant_id' => $tenant->id,
-            'role_id' => $tenantRole->id,
+            'role_id' => $request->input(key: 'role_id'),
             'email' => $request->input('email'),
         ]);
 

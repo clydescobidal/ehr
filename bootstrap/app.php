@@ -17,21 +17,21 @@ return Application::configure(basePath: dirname(__DIR__))
     
             foreach ($centralDomains as $domain) {
                 Route::middleware('api')
-                    ->prefix('api/v1/central')
-                    ->group([
-                        base_path('routes/central/auth.php'),
-                        base_path('routes/central/api.php'),
-                    ]);
+                ->prefix('api/v1/central')
+                ->group([
+                    base_path('routes/central/auth.php'),
+                    base_path('routes/central/api.php'),
+                ]);
             }
     
             Route::middleware([
-                    'api', 
-                    'auth:sanctum', 
-                    InitializeTenancyByRequestData::class, 
-                    HasTenantRoles::class
-                ])
-                ->prefix('api/v1/tenants')
-                ->group(base_path('routes/tenant/api.php'));
+                'api', 
+                'auth:sanctum', 
+                InitializeTenancyByRequestData::class, 
+                HasTenantRoles::class
+            ])
+            ->prefix('api/v1/tenants')
+            ->group(base_path('routes/tenant/api.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {

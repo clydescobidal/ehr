@@ -4,11 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Traits\HasUlids;
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\PermissionRegistrar;
 
 class User extends Authenticatable
 {
@@ -55,29 +56,11 @@ class User extends Authenticatable
         ];
     }
     
-    public function tenants() {
+    public function tenantUsers() {
         return $this->hasMany(TenantUser::class);
     }
 
-    public function getTenantRolesAttribute() {
-        $tenantRoles = [];
-        $tenant = tenant();
-        
-        if ($tenant) {
-            $tenantRoles = $this->tenants->firstWhere('tenant_id', $tenant->id)?->roles;
-        }
-
-        return $tenantRoles;
-    }
-
-    public function getRolesOnTenant(Tenant $tenant) {
-        $roles = [];
-
-        $tenant = $this->tenants->firstWhere('tenant_id', $tenant->id);
-        if ($tenant) {
-            $roles = $tenant->roles->pluck('name')->toArray();
-        }
-        
-        return $roles;
+    public function getRolesOnTenant(?Tenant $tenant = null) {
+        return $tenant->tenantUsers->firstWhere('user_id', $this->id)->roles->pluck('name')->toArray();
     }
 }

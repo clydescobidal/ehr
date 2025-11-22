@@ -15,7 +15,7 @@ class TenantUser extends Model
     protected string $ULID_PREFIX = 'tnu_';
 
     protected $keyType = 'string';
-    
+
     public $incrementing = false;
 
     protected $fillable = [

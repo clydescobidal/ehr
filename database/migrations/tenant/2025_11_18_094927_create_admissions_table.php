@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('patient_id', 30);
             $table->timestamp('discharged_at')->nullable();
             $table->string('discharge_status', 20)->nullable();
+            $table->string('diagnosis')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

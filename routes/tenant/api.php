@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\PatientController;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Route;
 
@@ -17,18 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // Patient::create([
-    //     'first_name' => 'Patient',
-    //     'last_name' => 'test',
-    //     'birth_date' => Carbon::now(),
-    //     'birth_place' => 'Digos City',
-    //     'occupation' => 'retired',
-    //     'religion' => 'Christian',
-    //     'contact_number' => '09654789898'
-    // ]);
-    $user = Auth::user();
+Route::group(['prefix' => 'patients'], function() {
+    Route::post('/', [PatientController::class, 'create']);
+});
 
-    return Patient::all();
-   return 'This is your multi-tenant application. The id of the current tenant is ' . tenant();
+Route::group(['prefix' => 'admissions'], function() {
+    Route::post('/', [AdmissionController::class, 'create']);
 });

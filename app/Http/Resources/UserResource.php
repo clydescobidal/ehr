@@ -15,15 +15,15 @@ class UserResource extends BaseJsonResource
     public function toArray(Request $request): array
     {
         $data = $this->resource->toArray();
-        $tenants = Arr::pull($data, 'tenants');
+        $tenantUsers = Arr::pull($data, 'tenant_users');
         $data['tenants'] = [];
-        foreach($tenants as $tenant) {
+
+        foreach($tenantUsers as $tenantUser) {
             $data['tenants'][] = [
-                ...$tenant['tenant'],
-                'roles' => Arr::pluck($tenant['roles'], 'name')
+                ...$tenantUser['tenant'],
+                'roles' => Arr::pluck($tenantUser['roles'], 'name')
             ];
         }
-
 
         return parent::format($data);
     }

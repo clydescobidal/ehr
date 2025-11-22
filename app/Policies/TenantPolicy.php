@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\Roles;
 use App\Models\Tenant;
 use App\Models\User;
-use Arr;
 
 class TenantPolicy
 {
@@ -18,8 +17,8 @@ class TenantPolicy
     }
 
     public function inviteUser(User $user, Tenant $tenant) {
-        $roles = $user->getRolesOnTenant($tenant);
+        $rolesOnTenant = $user->getRolesOnTenant($tenant);
 
-        return in_array(Roles::OWNER->value, $roles) || in_array(Roles::ADMINISTRATOR->value, $roles);
+        return in_array(Roles::OWNER->value, $rolesOnTenant) || in_array(Roles::ADMINISTRATOR->value, $rolesOnTenant);
     }
 }
