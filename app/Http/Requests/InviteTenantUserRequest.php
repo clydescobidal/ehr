@@ -26,7 +26,7 @@ class InviteTenantUserRequest extends FormRequest
     {
         return [
             'tenant_id' => ['required', 'string', 'exists:tenants,id'],
-            'role_id' => ['required', 'string', 'exist:roles,id'],
+            'role_id' => ['required', 'string', 'exists:roles,id'],
             'email' => ['required', 'string', 'email']
         ];
     }
