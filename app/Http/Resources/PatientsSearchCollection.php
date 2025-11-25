@@ -2,31 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Patient;
+use Arr;
 use Illuminate\Http\Request;
 
 class PatientsSearchCollection extends BaseResourceCollection
 {
     public function toArray(Request $request): array
     {
-        $data = $this->collection->map(function(Patient $resource) {
-            return $resource->only([
-                'id',
-                'first_name',
-                'middle_name',
-                'last_name',
-                'birth_date',
-                'birth_place',
-                'address_line_1',
-                'address_line_2',
-                'address_barangay',
-                'address_city',
-                'address_province',
-                'address_postal_code',
-                'occupation',
-                'religion',
-                'contact_number'
-            ]);
+        $hits = $this->collection->get('hits');
+        $data = collect($hits)->map(function($resource) {
+            return Arr::only($resource['document'], ['id', 'first_name', 'middle_name', 'last_name']);
         });
 
         return parent::format($data);

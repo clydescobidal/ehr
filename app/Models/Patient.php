@@ -57,7 +57,9 @@ class Patient extends Model
     {
         return [
             'id' => $this->id,
+            'full_name' => "$this->last_name$this->first_name$this->middle_name",
             'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'created_at' => $this->created_at->timestamp,
         ];

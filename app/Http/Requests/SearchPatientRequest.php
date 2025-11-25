@@ -23,7 +23,7 @@ class SearchPatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => ['string', 'required', 'min:2']
+            'q' => ['required', 'string', 'min:2'],
         ];
     }
 }

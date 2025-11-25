@@ -192,24 +192,35 @@ return [
                             'type' => 'string',
                         ],
                         [
+                            'name' => 'full_name',
+                            'type' => 'string',
+                            'infix' => false,
+                        ],
+                        [
                             'name' => 'first_name',
                             'type' => 'string',
+                            'infix' => false,
+                        ],
+                        [
+                            'name' => 'middle_name',
+                            'type' => 'string',
+                            'infix' => false,
                         ],
                         [
                             'name' => 'last_name',
                             'type' => 'string',
+                            'infix' => false,
                         ],
                         [
                             'name' => 'created_at',
-                            'type' => 'int64',
+                            'type' => 'int64'
                         ],
                     ],
                     'default_sorting_field' => 'created_at',
                 ],
                 'search-parameters' => [
-                    'query_by' => 'last_name,first_name',
-                    'query_by_weights' => [2,1],
-                    'token_separators' => [',', ' ']
+                    'query_by' => 'full_name',
+                    'infix' => 'off'
                 ],
             ],
         ]
