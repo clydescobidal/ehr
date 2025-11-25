@@ -11,11 +11,14 @@ use Illuminate\Auth\Access\Response;
 
 class PatientPolicy
 {
-
-    /**
-     * Determine whether the user can create models.
-     */
     public function createPatient(User $user): bool
+    {
+        $roles = $user->getRolesOnTenant(tenant());
+
+        return in_array(Roles::DOCTOR->value, $roles) || in_array(Roles::NURSE->value, $roles);
+    }
+
+    public function searchPatients(User $user): bool
     {
         $roles = $user->getRolesOnTenant(tenant());
 

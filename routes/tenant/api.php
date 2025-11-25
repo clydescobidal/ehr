@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'patients'], function() {
     Route::post('/', [PatientController::class, 'create']);
+    Route::get('/search', [PatientController::class, 'search']);
 });
 
 Route::group(['prefix' => 'admissions'], function() {

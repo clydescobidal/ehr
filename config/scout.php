@@ -192,7 +192,11 @@ return [
                             'type' => 'string',
                         ],
                         [
-                            'name' => 'full_name',
+                            'name' => 'first_name',
+                            'type' => 'string',
+                        ],
+                        [
+                            'name' => 'last_name',
                             'type' => 'string',
                         ],
                         [
@@ -203,7 +207,9 @@ return [
                     'default_sorting_field' => 'created_at',
                 ],
                 'search-parameters' => [
-                    'query_by' => 'name'
+                    'query_by' => 'last_name,first_name',
+                    'query_by_weights' => [2,1],
+                    'token_separators' => [',', ' ']
                 ],
             ],
         ]

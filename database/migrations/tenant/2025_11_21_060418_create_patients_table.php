@@ -14,12 +14,19 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->ulid('id', length: 30)->primary();
             $table->string('first_name');
+            $table->string('middle_name');
             $table->string('last_name');
             $table->date('birth_date');
             $table->string('birth_place');
+            $table->text('address_line_1');
+            $table->text('address_line_2');
+            $table->string('address_barangay');
+            $table->string('address_city');
+            $table->string('address_province');
+            $table->string('address_postal_code');
             $table->string('occupation');
             $table->string('religion');
-            $table->string('contact_number');
+            $table->text('contact_number');
             $table->timestamps();
             $table->softDeletes();
         });
