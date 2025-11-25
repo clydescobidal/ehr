@@ -17,8 +17,9 @@ class HasTenantRoles
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
+        $rolesOnTenant = $user->getRolesOnTenant(tenant());
 
-        if ($user?->tenantRoles->isEmpty()) {
+        if (! $rolesOnTenant) {
             abort(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
         }
 

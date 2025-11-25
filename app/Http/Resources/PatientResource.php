@@ -4,6 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 
-class TenantResource extends BaseJsonResource
+class PatientResource extends BaseJsonResource
 {
 }

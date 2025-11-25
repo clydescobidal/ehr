@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\Roles;
 use App\Models\AppModelsPatient;
 use App\Models\Patient;
 use App\Models\Role;
@@ -16,8 +17,8 @@ class PatientPolicy
      */
     public function createPatient(User $user): bool
     {
-        $roles = $user->getRolesOnTenant();
-        print_r($roles);
-        return false;
+        $roles = $user->getRolesOnTenant(tenant());
+
+        return in_array(Roles::DOCTOR->value, $roles) || in_array(Roles::NURSE->value, $roles);
     }
 }
