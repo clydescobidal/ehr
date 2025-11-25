@@ -9,7 +9,7 @@ class Invite extends Model
 {
     use HasUlids;
 
-    protected string $ULID_PREFIX = 'dep_';
+    protected string $ULID_PREFIX = 'inv_';
 
     protected $keyType = 'string';
 
@@ -23,5 +23,9 @@ class Invite extends Model
 
     public function tenant() {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 }

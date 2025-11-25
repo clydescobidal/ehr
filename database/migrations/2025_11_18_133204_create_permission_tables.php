@@ -34,20 +34,15 @@ return new class extends Migration
 
             $table->string('model_type');
             $table->ulid($columnNames['model_morph_key'], 30);
-            $table->ulid('department_id', 30)->nullable();
-            $table->index([$columnNames['model_morph_key'], 'model_type', 'department_id'], 'model_has_roles_model_id_model_type_department_id_index');
+            $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_roles_model_id_model_type_index');
 
             $table->foreign($pivotRole)
                 ->references('id') // role id
                 ->on($tableNames['roles'])
                 ->cascadeOnDelete();
 
-            $table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->nullOnDelete();
     
-            $table->primary([$pivotRole, $columnNames['model_morph_key'], 'model_type', 'department_id'],
+            $table->primary([$pivotRole, $columnNames['model_morph_key'], 'model_type'],
                 'model_has_roles_role_model_type_primary');
         });
 

@@ -60,7 +60,18 @@ class User extends Authenticatable
         return $this->hasMany(TenantUser::class);
     }
 
-    public function getRolesOnTenant(?Tenant $tenant = null) {
-        return $tenant->tenantUsers->firstWhere('user_id', $this->id)->roles->pluck('name')->toArray();
+    public function getRolesOnTenant(Tenant $tenant) {
+        return $tenant
+            ->tenantUsers
+            ->firstWhere('user_id', $this->id)
+            ->roles
+            ->pluck('name')
+            ->toArray();
+    }
+
+    public function getTenantUserOnTenant(Tenant $tenant): TenantUser {
+        return $tenant
+            ->tenantUsers
+            ->firstWhere('user_id', $this->id);
     }
 }

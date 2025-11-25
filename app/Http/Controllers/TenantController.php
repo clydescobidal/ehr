@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Departments;
 use App\Http\Requests\CreateTenantRequest;
 use App\Http\Resources\TenantResource;
+use App\Models\Department;
 use App\Models\Tenant;
 use App\Models\TenantUser;
 use Auth;
