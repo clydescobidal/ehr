@@ -27,7 +27,10 @@ class PatientController extends Controller
             abort(Response::HTTP_FORBIDDEN, 'FORBIDDEN');
         }
 
-        $patients = Patient::search($request->input('q'))->raw();
+        $patients = Patient::search($request->input('q'))->options([
+            'num_typos' => 0,
+            'limit_hits' => 10
+        ])->raw();
 
         return PatientsSearchCollection::make($patients);
     }

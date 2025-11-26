@@ -194,22 +194,21 @@ return [
                         [
                             'name' => 'full_name',
                             'type' => 'string',
-                            'infix' => false,
                         ],
                         [
                             'name' => 'first_name',
                             'type' => 'string',
-                            'infix' => false,
+                            'index' => false,
                         ],
                         [
                             'name' => 'middle_name',
                             'type' => 'string',
-                            'infix' => false,
+                            'index' => false,
                         ],
                         [
                             'name' => 'last_name',
                             'type' => 'string',
-                            'infix' => false,
+                            'index' => false,
                         ],
                         [
                             'name' => 'created_at',
@@ -220,7 +219,7 @@ return [
                 ],
                 'search-parameters' => [
                     'query_by' => 'full_name',
-                    'infix' => 'off'
+                    'prefix' => true,
                 ],
             ],
         ]
