@@ -26,4 +26,5 @@ Route::group(['prefix' => 'patients'], function() {
 
 Route::group(['prefix' => 'admissions'], function() {
     Route::post('/', [AdmissionController::class, 'create']);
+    Route::get('/', [AdmissionController::class, 'list']);
 });

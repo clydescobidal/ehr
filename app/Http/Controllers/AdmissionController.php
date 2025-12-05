@@ -23,4 +23,8 @@ class AdmissionController extends Controller
 
         return AdmissionResource::make($admission);
     }
+
+    public function list(){
+        
+    }
 }
