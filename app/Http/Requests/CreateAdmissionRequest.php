@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Admission;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +13,9 @@ class CreateAdmissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        $user = Auth::user();
+
+        return $user && $user->can('createAdmission', new Admission());
     }
 
     /**
@@ -23,7 +26,7 @@ class CreateAdmissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => ['required', 'string',  'exists:patients,id']
+            'patient_id' => ['required', 'string', 'exists:patients,id']
         ];
     }
 }

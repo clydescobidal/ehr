@@ -13,20 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 class PatientController extends Controller
 {
     public function create(CreatePatientRequest $request) {
-        if (Auth::user()->cannot('createPatient', new Patient())) {
-            abort(Response::HTTP_FORBIDDEN, 'FORBIDDEN');
-        }
-
         $patient = Patient::create($request->validated());
 
         return PatientResource::make($patient);
     }
 
     public function search(SearchPatientRequest $request) {
-        if (Auth::user()->cannot('createPatient', new Patient())) {
-            abort(Response::HTTP_FORBIDDEN, 'FORBIDDEN');
-        }
-
         $patients = Patient::search($request->input('q'))->options([
             'num_typos' => 0,
             'limit_hits' => 10

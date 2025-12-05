@@ -40,20 +40,31 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e, $request) {
             $status = ExceptionStatus::fromException(e: $e);
+
+            $data = null;
+            if (method_exists($e, 'errors')) {
+                $errors =  $e->errors();
+                if ($errors && is_array($errors)) {
+                    $data = Arr::map($errors, function ($messages) {
+                        return $messages[0];
+                    });
+                }
+            }
+
             $data = [
                 'status' => [
                     'error' => true,
-                    'message' => $e->getMessage(),
-                    'code' => $status,
+                    'message' => $status['message'],
+                    'code' => $status['code'],
                 ],
-                'data' => null,
+                'data' => $data,
             ];
 
             if (config('app.debug')) {
                 $data['status']['trace'] = $e->getTrace();
             }
     
-            return response()->json($data, $status);
+            return response()->json($data, $status['code']);
         });
     })
     ->create();

@@ -14,9 +14,14 @@ class Admission extends Model
 
     protected $fillable = [
         'patient_id',
+        'admitted_by',
         'discharged_at',
         'discharge_status',
         'diagnosis'
+    ];
+
+    protected $hidden = [
+        'updated_at'
     ];
 
     protected $keyType = 'string';

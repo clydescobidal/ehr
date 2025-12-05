@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('admissions', function (Blueprint $table) {
             $table->ulid('id', length: 32)->primary();
             $table->string('patient_id', 30);
+            $table->string('admitted_by', 30);
             $table->timestamp('discharged_at')->nullable();
             $table->string('discharge_status', 20)->nullable();
             $table->string('diagnosis')->nullable();

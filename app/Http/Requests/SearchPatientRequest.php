@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Patient;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +13,9 @@ class SearchPatientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        $user = Auth::user();
+
+        return $user && $user->can('searchPatients', new Patient());
     }
 
     /**
