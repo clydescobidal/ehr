@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\GenderIdentity;
+use App\Enums\MaritalStatus;
 use App\Models\Patient;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,6 +27,18 @@ class CreatePatientRequest extends FormRequest
                 'gender' => strtoupper($this->input('gender'))
             ]);
         }
+
+        if ($this->has('biological_sex')) {
+            $this->merge([
+                'biological_sex' => strtoupper($this->input('biological_sex'))
+            ]);
+        }
+
+        if ($this->has('marital_status')) {
+            $this->merge([
+                'marital_status' => strtoupper($this->input('marital_status'))
+            ]);
+        }
     }
 
     /**
@@ -34,11 +48,17 @@ class CreatePatientRequest extends FormRequest
      */
     public function rules(): array
     {
+        $genderIdentity = array_column(GenderIdentity::cases(), 'value');
+        $maritalStatus = array_column(MaritalStatus::cases(), 'value');
+
         return [
             'first_name' => ['required', 'string', 'min:2'],
             'middle_name' => ['required', 'string', 'min:2'],
             'last_name' => ['required', 'string', 'min:2'],
-            'gender' => ['required', 'string', 'in:MALE,FEMALE'],
+            'gender' => ['required', 'string', 'in:'.join(',', $genderIdentity)],
+            'biological_sex' => ['required', 'string', 'in:MALE,FEMALE'],
+            'marital_status' => ['required', 'string', 'in:'.join(',', $maritalStatus)],
+            'blood_type' => ['required', 'string'],
             'birth_date' => ['required', 'date'],
             'birth_place' => ['required', 'string'],
             'address_line_1' => ['required', 'string'],

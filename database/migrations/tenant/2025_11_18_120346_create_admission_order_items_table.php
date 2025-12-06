@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('admission_id')->references('id')->on('admissions')->cascadeOnDelete();
+            $table->foreign('admission_order_id')->references('id')->on('admission_orders')->cascadeOnDelete();
         });
     }
 
