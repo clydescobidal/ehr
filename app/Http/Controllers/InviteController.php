@@ -26,7 +26,7 @@ class InviteController extends Controller
     public function create(InviteTenantUserRequest $request) {
         $tenant = Tenant::findOrFail($request->input('tenant_id'));
 
-        if (Auth::user()->cannot('invite-user', $tenant)) {
+        if (Auth::user()->cannot('inviteUser', $tenant)) {
             abort(Response::HTTP_FORBIDDEN, 'FORBIDDEN');
         }
 

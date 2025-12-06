@@ -15,7 +15,16 @@ class CreatePatientRequest extends FormRequest
     {
         $user = Auth::user();
 
-        return $user && $user->can('create-patient', new Patient());
+        return $user && $user->can('createPatient', new Patient());
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('gender')) {
+            $this->merge([
+                'gender' => strtoupper($this->input('gender'))
+            ]);
+        }
     }
 
     /**
@@ -29,6 +38,7 @@ class CreatePatientRequest extends FormRequest
             'first_name' => ['required', 'string', 'min:2'],
             'middle_name' => ['required', 'string', 'min:2'],
             'last_name' => ['required', 'string', 'min:2'],
+            'gender' => ['required', 'string', 'in:MALE,FEMALE'],
             'birth_date' => ['required', 'date'],
             'birth_place' => ['required', 'string'],
             'address_line_1' => ['required', 'string'],

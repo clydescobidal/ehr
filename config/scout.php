@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ICD10Code;
 use App\Models\Patient;
 use App\Models\User;
 
@@ -219,6 +220,25 @@ return [
                 ],
                 'search-parameters' => [
                     'query_by' => 'full_name',
+                    'prefix' => true,
+                ],
+            ],
+            ICD10Code::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        [
+                            'name' => 'code',
+                            'type' => 'string',
+                        ],
+                        [
+                            'name' => 'description',
+                            'type' => 'string',
+                            'index' => false,
+                        ],
+                    ],
+                ],
+                'search-parameters' => [
+                    'query_by' => 'code',
                     'prefix' => true,
                 ],
             ],

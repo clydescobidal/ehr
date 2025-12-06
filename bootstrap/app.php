@@ -50,6 +50,11 @@ return Application::configure(basePath: dirname(__DIR__))
                     });
                 }
             }
+            if (! $data && method_exists($e, 'getMessage')) {
+                $data = [
+                    'error_message' => $e->getMessage()
+                ];
+            }
 
             $data = [
                 'status' => [

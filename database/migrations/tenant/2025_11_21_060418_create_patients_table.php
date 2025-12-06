@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
+            $table->string('gender',50);
+            $table->string('biological_sex', 20);
+            $table->string('marital_status', 50);
+            $table->string('blood_type', 50);
             $table->date('birth_date');
             $table->string('birth_place');
             $table->text('address_line_1');
@@ -27,6 +31,7 @@ return new class extends Migration
             $table->string('occupation');
             $table->string('religion');
             $table->text('contact_number');
+            $table->date('deceased_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -21,4 +21,11 @@ class AdmissionPolicy
 
         return in_array(Roles::DOCTOR->value, $roles) || in_array(Roles::NURSE->value, $roles);
     }
+
+    public function listAdmissions(User $user): bool
+    {
+        $roles = $user->getRolesOnTenant(tenant());
+
+        return in_array(Roles::DOCTOR->value, $roles) || in_array(Roles::NURSE->value, $roles);
+    }
 }

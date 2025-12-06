@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
-enum ExceptionStatus: int
+enum ExceptionStatus
 {
     public static function fromException(Throwable $e): array
     {
