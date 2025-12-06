@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('diagnosis')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
         });
     }
 

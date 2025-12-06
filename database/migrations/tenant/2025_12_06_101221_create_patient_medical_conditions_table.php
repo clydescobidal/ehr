@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('diagnosed_by')->nullable();
             $table->text(column: 'notes')->nullable();
             $table->timestamps();
+
+            $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
         });
     }
 

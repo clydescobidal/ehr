@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text(column: 'notes')->nullable();
             $table->string('documented_by')->nullable();
             $table->timestamps();
+
+            $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
         });
     }
 

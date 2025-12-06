@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('user_id', length: 32);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('admission_id')->references('id')->on('admissions')->cascadeOnDelete();
         });
     }
 

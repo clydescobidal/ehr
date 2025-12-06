@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('contact_number', 30);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
         });
     }
 
