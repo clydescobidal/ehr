@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('patient_medical_conditions', function (Blueprint $table) {
             $table->ulid('id', length: 30)->primary();
             $table->string('patient_id', length: 30);
-            $table->string('condition_code', length: 50);
-            $table->string('condition_description', length: 50);
+            $table->string('condition');
             $table->string('severity', length: 50);
             $table->string('clinical_status', length: 50);
             $table->string('verification_status', length: 50)->nullable();
