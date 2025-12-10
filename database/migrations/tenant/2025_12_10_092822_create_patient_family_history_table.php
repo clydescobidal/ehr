@@ -15,6 +15,7 @@ return new class extends Migration
             $table->ulid('id', length: 30)->primary();
             $table->string('patient_id', length: 30);
             $table->string('relationship', length: 50);
+            $table->string('condition');
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
